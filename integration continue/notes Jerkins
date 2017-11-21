@@ -1,0 +1,57 @@
+        *********************************************
+        ****************** Jenkins ******************
+        *********************************************
+
+        ********* Installation *********
+- Installer JDK 8
+    http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+- Télécharger jenkins.war
+    http://mirrors.jenkins.io/war-stable/latest/jenkins.war
+- Installer jenkins
+    java -jar jenkins.war --httpPort=8080
+- Ouvrir jenkins
+    http://localhost:8080
+        *********************************************
+
+
+
+        ********* Première initialisation *********
+- Copier le mot de passe administrateur
+    sudo cat /Users/Shared/Jenkins/Home/secrets/initialAdminPassword
+- Fournir le mot de passe à la page de première configuration
+    ex: cc651cf3b0a44b58b722f9eda941e0d0
+- Choisir les différents plugins/outils à installer
+- Définir le compte administrateur
+- Voilà c'est installé et initialisé
+        *********************************************
+
+
+
+        ********* Configuration *********
+- Voir le paramétrage
+    defaults read /Library/Preferences/org.jenkins-ci
+- Voir un paramètre spécifique
+    defaults read /Library/Preferences/org.jenkins-ci SETTING
+- Définir un paramètre spécifique
+    defaults write /Library/Preferences/org.jenkins-ci SETTING VALUE
+
+- Démarrer le service
+    sudo launchctl load /Library/LaunchDaemons/org.jenkins-ci.plist
+- Arrêter le service
+    sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist
+        *********************************************
+
+
+
+        ********* Installation de Blue Ocean dans Docker *********
+- Installer Docker
+    https://store.docker.com/search?type=edition&offering=community
+- Lancer cette super commande
+    docker run \
+        --rm \
+        -u root \
+        -p 8080:8080 \
+        -v jenkins-data:/var/jenkins_home \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        -v "$HOME":/home \
+        jenkinsci/blueocean
